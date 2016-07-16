@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vastChallenge</title>
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <script type="text/javascript" src="../static/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="../static/d3.min.js"></script>
+    <script src="../static/echarts.min.js"></script>
+    <!--<script src="../static/public/js/jquery-1.8.3.js" type="text/javascript"></script>-->
+
+    <style type="text/css">
+        #floorPlan1 {
+            width:500px;
+            height:300px;
+            border: 1px solid lightgray;
+            opacity: 1;
+            background:url(../static/VAST_ProxZones_F1.jpg);
+            background-size:500px 300px;
+        }
+        #floorPlan2 {
+            width:500px;
+            height:300px;
+            border: 1px solid lightgray;
+            opacity: 1;
+            background:url(../static/VAST_ProxZones_F2.jpg);
+            background-size:500px 300px;
+        }
+        #floorPlan3 {
+            width:500px;
+            height:300px;
+            border: 1px solid lightgray;
+            opacity: 1;
+            background:url(../static/VAST_ProxZones_F3.jpg);
+            background-size:500px 300px;
+        }
+        #zone_paras{
+            border:1px solid lightgray;
+        }
+
+        #total_paras_view{
+            border: 1px solid lightseagreen;
+        }
+
+        #timeplace{
+            border: 3px solid;
+            border-color: rgb(246,247,247);
+        }
+        #explore{
+            background-color:	AntiqueWhite;
+           border: 1px solid lightseagreen;
+        }
+        #radar{
+            border:1px solid lightgray ;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+
+        <div class="row" style="margin-top: 0px;">
+            <!--<div class ="row">
+                <div class="col-lg-4">
+                <h4>floorPlan1 view</h4>
+                <div id ="floorPlan1"></div>
+                </div>
+            </div>
+            <div class = "row">
+                <div class="col-lg-4">
+                <h4>floorPlan2 view</h4>
+                <div id ="floorPlan2"></div>
+            </div>
+            </div>
+            <div calss="row">
+                <div class="col-lg-4">
+                <h4>floorPlan3 view</h4>
+                <div id ="floorPlan3"></div>
+            </div>
+            </div>-->
+            <div class ="row" >
+
+                <div class="col-lg-10" >
+                    <div class="row" style="background-color: aliceblue">
+                        <div class="row" style="margin-left:20px;margin-top: 5px;">
+                            <button type="button" class="btn btn-primary" id="timePlaceStack" style="left:0px; top:0px; width:30px; height:70px; font-size: x-small;padding-left: 0px;padding-top: 0px;"
+                            onmouseover="showiframe('#timeplace','#myiframe',1203)" onclick="hideiframe('#timeplace','#myiframe')">
+                                <span class="glyphicon glyphicon-tag"></span><br>time<br>place<br>stack</button>
+            <span class="glyphicon glyphicon-dashboard" style="font-size:40px;margin-left: 10px" ></span>
+            <button class="btn-default btn-success" onclick="oneTrajectory(-1)" style="margin-top: 10px;margin-left: 10px">person trajactory<span class="glyphicon glyphicon-triangle-left"></span></button>
+            <button class="btn-default btn-success" onclick="clickWithTime(-1)" style="margin-top: 10px">energy situaton<span class="glyphicon glyphicon-chevron-left"></span></button>
+            <input type="text" id="timeOfAll" style="width: 140px; margin-top: 10px;" value="2016-5-31 0:0:0">
+            <button class="btn-default btn-success" onclick="clickWithTime(0)" style="margin-top: 10px"><span class="glyphicon glyphicon-facetime-video"></span></button>
+            <input type="text" id="selectedPara" style="width: 140px; margin-top:10px" value="Lights Power">
+            <button class="btn-default btn-success" onclick="clickWithTime(1)" style="margin-top: 10px"><span class="glyphicon glyphicon-chevron-right"></span></button>
+            <button class="btn-default btn-success" onclick="oneTrajectory(1)" style="margin-top: 10px"><span class="glyphicon glyphicon-triangle-right"></span></button>
+            <span class="glyphicon glyphicon-eye-open" style="margin-top: 12px">inspected&nbsp;</span><input type="text" id="tra-proxid" style="width: 100px; margin-top: 10px;" value="apinckney001">
+            <img src="../static/figure.jpg" class="img-circle" style="width:70px;height: 60px;" onclick="oneTrajectory(0)">
+            <span class="glyphicon glyphicon-user" style="margin-top: 10px">onemore</span><input type="text" id="tra-proxid-else" style="width: 100px; margin-top: 10px;" value = "mcassano001">
+            <button class="btn-default btn-success" onclick="robot(-1)" style="margin-left: 30px; margin-top: 10px;"><span class="glyphicon glyphicon-log-out"></span></button>
+            <img src="../static/robot.jpg" class="img-circle" style="width:70px;height: 60px ; margin-left: 10px;;" onclick="robot(0)"><span class="glyphicon glyphicon-print" style="margin-left:10px;margin-top: 10px">robot trace</span>
+            <button class="btn-default btn-success" onclick="robot(1)" style="margin-top: 10px;"><span class="glyphicon glyphicon-log-out"></span></button>
+
+        </div>
+                    </div>
+                    <div class="row" style="margin-left: 2px">
+                        <div class="col-lg-4" style="border: 1px solid lightgray;">
+                        <h4>floorPlan1 view</h4>
+                        <div id ="floorPlan1"></div>
+                        <div class="col-lg-12" id="vav_floor1" style="height:96px">floor1 vav</div>
+                        </div>
+
+                    <div class="col-lg-4" style="border: 1px solid lightgray;">
+                        <h4>floorPlan2 view</h4>
+                        <div id ="floorPlan2"></div>
+                        <div class="col-lg-12" id="vav_floor2" style="height:96px">floor2 vav</div>
+                    </div>
+
+                    <div class="col-lg-4" style="border: 1px solid lightgray;">
+                        <h4>floorPlan3 view</h4>
+                        <div id ="floorPlan3"></div>
+                        <div class="col-lg-12" id="vav_floor3" style="height:96px">floor3 vav</div>
+                    </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-2" style="background-color:aliceblue;height:510px">
+                    <div class="btn-group btn-group-xs" role="group">
+                <div class="row" style="margin-left: 10px;margin-top: 10px;">
+                    Floor&nbsp;&nbsp;&&nbsp;&nbsp;Zone&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-xs" style="margin-left: 10px;float:right;margin-right: 15px;" onmouseover="showiframe('#explore','#exploreframe',1400),showiframe('#explore','#exploreframe2',1400)" onclick="hideiframe('#explore','#exploreframe'),hideiframe('#explore','#exploreframe2')"><span class="glyphicon glyphicon-tag"></span>explore paras' relation</button> </br>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('Lights Power',0,2699,'rgb(25,25,112)','rgb(255,215,0)')">Lights Power</button>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('Equipment Power',0,2699,'rgb(25,25,112)','rgb(255,215,0)')">Equipment Power</button>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('REHEAT COIL Power',0,6363,'rgb(25,25,112)','rgb(255,215,0)')">REHEAT COIL Power</button>
+                    </br>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('Thermostat Temp',25,29,'rgb(0,0,250)','rgb(255,0,0)')">Thermostat Temp</button>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="drawSelectPara('Thermostat Heating Setpoint',12,39,'rgb(0,0,250))','rgb(255,0,0)')">Heating Setpoint</button>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('Thermostat Cooling Setpoint',12,39,'rgb(0,0,250))','rgb(255,0,0)')">Cooling Setpoint</button>
+
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('SUPPLY INLET Temperature',12,39,'rgb(0,0,250))','rgb(255,0,0)')">SUPPLY INLET Temperature</button>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('SUPPLY INLET Mass Flow Rate',0,4,'rgb(255,0,0)','rgb(0,255,0)')">SUPPLY INLET Mass Flow Rate</button>
+                    </br>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('VAV REHEAT Damper Position',0,1,'rgb(25,25,112)','rgb(255,215,0)')">Damper Position</button>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('RETURN OUTLET CO2 Concentration',49.6,2471,'rgb(0,255,0)','rgb(255,0,0)')">CO2 Concentration</button>
+                    </br></br>
+
+                </div>
+                <div class="row" style="margin-left: 10px;margin-top:10px">
+                    Floor VAV_SYS</br>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('VAV_SYS SUPPLY FAN:Fan Power',0,6161,'rgb(25,25,112)','rgb(255,215,0)')">Fan Power</button>
+                     <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('BATH_EXHAUST:Fan Power',0,20.2,'rgb(25,25,112)','rgb(255,215,0)')">BATH Fan Power</button>
+
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('VAV_SYS Outdoor Air Mass Flow Rate',0,0.7,'rgb(255,0,0)','rgb(0,255,0)')">Outdoor Air Mass Flow Rate</button>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('VAV_SYS SUPPLY FAN OUTLET Mass Flow Rate',0,7.1,'rgb(255,0,0)','rgb(0,255,0)')">SUPPLY FAN OUTLET Mass Flow Rate</button>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('VAV_SYS Outdoor Air Flow Fraction',0,1,'rgb(25,25,112)','rgb(255,215,0)')">Outdoor Air Flow Fraction</button></br>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('VAV_SYS COOLING COIL Power',0,10980,'rgb(25,25,112)','rgb(255,215,0)')">COOLING COIL Power</button>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('VAV_SYS AIR LOOP INLET Temperature',0,41,'rgb(0,0,250)','rgb(255,0,0)')">AIR LOOP INLET Temperature</button>
+
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('VAV_SYS SUPPLY FAN OUTLET Temperature',0,41,'rgb(0,0,250)','rgb(255,0,0)')">SUPPLY FAN OUTLET Temperature</button>
+                    <button type="button" class="btn btn-default btn-xs"
+                    onclick="augmentedDrawSelectPara('VAV Availability Manager Night Cycle Control Status',0,41,'rgb(0,0,250)','rgb(255,0,0)')">f1 Night Cycle Control Status</button>
+
+                </div>
+                <div class="row" style="margin-left: 10px;margin-top:10px">
+                    </br>
+                    Overall Situation </br>
+
+                    <button type="button" class="btn btn-default btn-xs" style="background-color: rgb(124,181,236)"
+                    onclick="augmentedDrawSelectPara('DELI-FAN Power',0,47.2,'rgb(0,255,0)','rgb(255,0,0)')">Deli Fan Power</button>
+                    <button type="button" class="btn btn-default btn-xs" style="background-color: rgb(67,67,72);color:white"
+                    onclick="augmentedDrawSelectPara('Total Electric Demand Power',0,47.2,'rgb(0,255,0)','rgb(255,0,0)')">Total Power</button>
+                    <button type="button" class="btn btn-default btn-xs" style="background-color: rgb(144,237,126)"
+                    onclick="augmentedDrawSelectPara('HVAC Electric Demand Power',0,47.2,'rgb(0,255,0)','rgb(255,0,0)')">HVAC Power</button></br>
+
+                    <button type="button" class="btn btn-default btn-xs" style="background-color: rgb(247,163,92)"
+                    onclick="augmentedDrawSelectPara('Drybulb Temperature',0,47.2,'rgb(0,255,0)','rgb(255,0,0)')">Drybulb Temp</button>
+                    <button type="button" class="btn btn-default btn-xs" style="background-color: rgb(128,133,233);color:white"
+                    onclick="augmentedDrawSelectPara('Supply Side Inlet Temperature',0,47.2,'rgb(0,255,0)','rgb(255,0,0)')">Water Temp</button></br>
+                    <button type="button" class="btn btn-primary btn-xs" style="margin-left: 10px;float:right;margin-right: 15px;" onmouseover="showdiv('#total_paras_view',1000)" onclick="hidediv('#total_paras_view')"><span class="glyphicon glyphicon-tag"></span>view total paras</button>
+
+
+                </div>
+             </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row" style="margin-left: 0px; ">
+            <div class="row">
+                <div class="col-lg-8" style="padding-left: 0px;margin-left: 0px;">
+
+                    <div id="zone_paras" class="col-lg-12" style="padding-left:0px;height:506px;background-color: aliceblue;"></div>
+                </div>
+                <div class="col-lg-4" style="background-color: aliceblue;margin-left: 0px;padding-left: 0px;border-left:0px">
+                    <div id="radar" class="col-lg-12" style="height:506px;"></div>
+                </div>
+        </div>
+        </div>
+    </div>
+
+
+
+    <div id="total_paras_view" style="position:absolute; top:504px; right:0px; width:0px;height:506px;">
+
+    </div>
+    <div id="timeplace" style="position:absolute; top:77px; left:0px; width:0px; height:940px;">
+       <iframe id = "myiframe" src = "/timeplace" width="0" height="940"></iframe>
+    </div>
+    <!--<div id="explore" style="position: absolute; top:30px;right:0px;width:0px;height: 452px;">-->
+    <div id="explore" style="position: absolute; top:30px;right:0px;width:0px;height: 904px;">
+        <iframe id = "exploreframe" src="/explore" width="0" height="452"></iframe>
+        <iframe id = "exploreframe2" src="/explore" width="0" height="452"></iframe>
+    </div>
+
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/highstock.js"></script>
+</body>
+<script type="text/javascript">
+    w = 500
+    h = 300
+    selecttime = (new Date($("#timeOfAll").val())).getTime();
+    selectpara = $("#selectedPara").val()
+    minpara = 0
+    maxpara = 2699
+    lcpara = 'rgb(25,25,112)'
+    hcpara = 'rgb(255,215,0)'
+    xzoom = w/189.0
+    yzoom = h/111.0
+    var floor = []
+
+    var floor1 = d3.select("#floorPlan1").append("svg").attr("width",w).attr("height",h).attr("class","floorone")
+    floor.push(floor1)
+
+    //zone energy zone
+    zone11 = floor1.append("g").attr("class","f1z1")
+    zone11x = 48*xzoom
+    zone11y = 40*yzoom
+    zone11.append("path").attr("d","M0,0 H"+zone11x.toString()+" V"+zone11y.toString()+" H0").attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px")
+            .attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone12 = floor1.append("g").attr("class","f1z2")
+    zone12x = 60*xzoom
+    zone12y = 36*yzoom
+    zone12.append("path").attr("d","M"+zone12x.toString()+",0 H"+(zone12x+75*xzoom).toString()+" V"+zone12y.toString()+" H"+zone12x.toString()).attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px")
+            .attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone13 = floor1.append("g").attr("class","f1z3")
+    zone13x = (189-40)*xzoom
+    zone13y = 95*yzoom
+    zone13.append("path").attr("d","M"+zone13x.toString()+",0 H"+(zone13x+40*xzoom).toString()+" V"+zone13y.toString()+" H"+zone13x.toString()).attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px")
+            .attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone14 = floor1.append("g").attr("class","f1z4")
+    zone14x = (189-40)*xzoom
+    zone14y = 16*yzoom
+    zone14.append("path").attr("d","M"+zone14x.toString()+","+zone13y.toString()+" H"+(zone14x+40*xzoom).toString()
+            +" V"+111*yzoom.toString()+" H"+zone14x.toString()).attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px")
+            .attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone15 = floor1.append("g").attr("class","f1z5")
+    zone15x = 74*xzoom
+    zone15y = (111-21)*yzoom
+    zone15.append("path").attr("d","M"+zone15x.toString()+","+zone15y.toString()+" H"+(zone15x+44*xzoom).toString()
+            +" V"+(zone15y-24*yzoom).toString()+" H"+zone15x.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone16 = floor1.append("g").attr("class","f1z6")
+    zone16x = zone15x-8*xzoom
+    zone16y = zone15y-24*yzoom
+    zone16.append("path").attr("d","M"+zone16x.toString()+","+zone16y.toString()+" H"+(zone16x+52*xzoom).toString()
+            +" V"+(zone16y-20*yzoom).toString()+" H"+zone16x.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone17 = floor1.append("g").attr("class","f1z7")
+    zone17y = 111*yzoom
+    zone17.append("path").attr("d","M0,"+zone17y.toString()+" H"+48*xzoom.toString()+" V"+(111-16)*yzoom.toString()+" H"+16*xzoom.toString()
+            +" V"+(111-71)*yzoom.toString()+" H0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone18a = floor1.append("g").attr("class","f1z8A")
+    zone18a.append("path").attr("d","M"+48*xzoom.toString()+",0 H"+60*xzoom.toString()+" V"+36*yzoom.toString()+" H"+135*xzoom.toString()
+            +" V0 H"+149*xzoom.toString()+" V"+(zone16y-20*yzoom).toString()+" H"+140*xzoom.toString()+" V"+zone16y.toString()+" H"+(zone16x+52*xzoom).toString()
+            +" V"+(zone16y-20*yzoom).toString()+" H"+zone16x.toString()+" V"+zone16y.toString()+" H"+(zone16x-13*xzoom).toString()+" V"+(zone16y-20*yzoom).toString()
+            +" H"+(zone16x-30*xzoom).toString()+" V"+zone16y.toString()+" H"+16*xzoom.toString()+" V"+40*yzoom.toString()+" H"+48*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone18b = floor1.append("g").attr("class","f1z8B")
+    zone18b.append("path").attr("d","M"+16*xzoom.toString()+","+zone16y.toString()+" H"+zone15x.toString()+" V"+zone15y.toString()+" H"
+            +(zone15x+44*xzoom).toString()+" V"+zone16y.toString()+" H"+149*xzoom.toString()+" V"+111*yzoom.toString()+" H"+48*xzoom.toString()
+            +" V"+95*yzoom.toString()+" H"+16*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    var floor2 = d3.select("#floorPlan2").append("svg").attr("width",w).attr("height",h).attr("class","floortwo")
+    floor.push(floor2)
+
+    zone21 = floor2.append("g").attr("class","f2z1")
+    zone21y = 16*yzoom
+    zone21.append("path").attr("d","M0,0 H"+20*xzoom.toString()+" V"+16*yzoom.toString()+" H0").attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px")
+            .attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone22 = floor2.append("g").attr("class","f2z2")
+    zone22.append("path").attr("d","M"+20*xzoom.toString()+",0 H"+(189-16)*xzoom.toString()+" V"+16*yzoom.toString()+" H"+20*xzoom.toString()).attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px")
+            .attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone23 = floor2.append("g").attr("class","f2z3")
+    zone23.append("path").attr("d","M"+(189-16)*xzoom.toString()+",0 H"+189*xzoom.toString()+" V"+20*yzoom.toString()+" H"+(189-16)*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone24 = floor2.append("g").attr("class","f2z4")
+    zone24.append("path").attr("d","M"+(189-16)*xzoom.toString()+","+20*yzoom.toString()+" H"+189*xzoom.toString()+" V"+(111-16)*yzoom.toString()
+            +" H"+(189-16)*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone25 = floor2.append("g").attr("class","f2z5")
+    zone25.append("path").attr("d","M"+(189-20)*xzoom.toString()+","+(111-16)*yzoom.toString()+" H"+189*xzoom.toString()+" V"+111*yzoom.toString()+" H"+(189-20)*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone26 = floor2.append("g").attr("class","f2z6")
+    zone26.append("path").attr("d","M"+16*xzoom.toString()+","+(111-16)*yzoom.toString()+" H"+(189-20)*xzoom.toString()+"V"+111*yzoom.toString()+" H"+16*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone27 = floor2.append("g").attr("class","f2z7")
+    zone27.append("path").attr("d","M0,"+(111-20)*yzoom.toString()+" H"+16*xzoom.toString()+" V"+111*yzoom.toString()+" H0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone28 = floor2.append("g").attr("class","f2z8")
+    zone28.append("path").attr("d","M0,"+16*yzoom.toString()+" H"+16*xzoom.toString()+" V"+(111-20)*yzoom.toString()+" H0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone29 = floor2.append("g").attr("class","f2z9")
+    zone29x = 21*xzoom
+    zone29y = 32*yzoom
+    zone29.append("path").attr("d","M"+zone29x.toString()+","+(zone29y-11*yzoom).toString()+" H"+(zone29x+37*xzoom).toString()
+            +" V"+zone29y.toString()+" H"+(zone29x+41*xzoom).toString()+" V"+(zone29y+9*yzoom).toString()
+            +" H"+(zone29x+16*xzoom).toString()+" V"+(zone29y+34*yzoom).toString()+" H"+(zone29x+24*xzoom).toString()
+            +" V"+(zone29y+58*yzoom).toString()+" H"+zone29x.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone210 = floor2.append("g").attr("class","f2z10")
+    zone210x = 73*xzoom
+    zone210.append("path").attr("d","M"+zone210x.toString()+","+(zone29y-11*yzoom).toString()+" H"+(zone210x+70*xzoom).toString()
+            +" V"+(zone29y+9*yzoom).toString()+" H"+zone210x.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone211 = floor2.append("g").attr("class","f2z11")
+    zone211x = zone210x+75*xzoom
+    zone211.append("path").attr("d","M"+zone211x.toString()+","+(zone29y-11*yzoom).toString()+" H"+(zone211x+20*xzoom).toString()
+            +" V"+(zone29y+9*yzoom).toString()+" H"+zone211x.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone212a = floor2.append("g").attr("class","f2z12A")
+    zone212a.append("path").attr("d","M"+16*xzoom.toString()+","+16*yzoom.toString()+" H"+zone210x.toString()+" V"+(zone29y+12*yzoom).toString()
+            +" H"+(zone29x+16*xzoom).toString()+" V"+(zone29y+9*yzoom).toString()+" H"+(zone29x+41*xzoom).toString()+" V"+zone29y.toString()
+            +" H"+(zone29x+37*xzoom).toString()+" V"+(zone29y-11*yzoom).toString()+" H"+zone29x.toString()+" V"+(zone29y+12*yzoom).toString()+" H"+16*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+    zone212a.append("path").attr("d","M"+zone210x.toString()+","+16*yzoom.toString()+" H"+(zone210x+75*xzoom).toString()+" V"+(zone29y+12*yzoom).toString()
+            +" H"+zone210x.toString()+" V"+(zone29y+9*yzoom).toString()+" H"+(zone210x+70*xzoom).toString()+" V"+(zone29y-11*yzoom).toString()
+            +" H"+zone210x.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+    zone212a.append("path").attr("d","M"+(zone210x+75*xzoom).toString()+","+16*yzoom.toString()+" H"+(189-16)*xzoom.toString()+" V"+(zone29y+12*yzoom).toString()
+            +" H"+(zone210x+75*xzoom).toString()+" V"+(zone29y+9*yzoom).toString()+" H"+(189-21)*xzoom.toString()+" V"+(zone29y-11*yzoom).toString()
+            +" H"+(zone210x+75*xzoom).toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone212b = floor2.append("g").attr("class","f2z12B")
+    zone212b.append("path").attr("d","M"+16*xzoom.toString()+","+(zone29y+12*yzoom).toString()+" H"+21*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()
+            +" H"+16*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+    zone212b.append("path").attr("d","M"+37*xzoom.toString()+','+(zone29y+12*yzoom).toString()+" H"+(189-35)*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()
+            +" H"+(189-40)*xzoom.toString()+" V"+(zone29y+14*yzoom).toString()+" H"+(189-65)*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()
+            +" H"+(189-70)*xzoom.toString()+" V"+(zone29y+14*yzoom).toString()+" H"+(119-52)*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()
+            +" H"+53*xzoom.toString()+" V"+(zone29y+14*yzoom).toString()+" H"+37*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+    zone212b.append("path").attr("d","M"+(189-35)*xzoom.toString()+","+(zone29y+12*yzoom).toString()+" H"+(189-16)*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()
+            +" H"+(189-21)*xzoom.toString()+" V"+(zone29y+14*yzoom).toString()+" H"+(189-35)*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone212c = floor2.append("g").attr("class","f2z12C")
+    zone212c.append("path").attr("d","M"+16*xzoom.toString()+","+(111-16)*yzoom.toString()+" V"+(zone29y+34*yzoom).toString()+" H"+21*xzoom.toString()
+            +" V"+(111-20)*yzoom.toString()+" H"+45*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()+" H"+75*xzoom.toString()+" V"+(111-20)*yzoom.toString()
+            +" H"+(75+44)*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()+" H"+(119+4)*xzoom.toString()+" V"+(111-16)*yzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+    zone212c.append("path").attr("d","M"+123*xzoom.toString()+","+(zone29y+34*yzoom).toString()+" H"+(189-16)*xzoom.toString()+" V"+(111-16)*yzoom.toString()
+            +" H"+123*xzoom.toString()+" V"+(111-20)*yzoom.toString()+" H"+(189-21)*xzoom.toString()+" V"+(zone29y+38*yzoom).toString()+" H"+123*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone213 = floor2.append("g").attr("class","f2z13")
+    zone213.append("path").attr("d","M"+67*xzoom.toString()+","+(zone29y+14*yzoom).toString()+" H"+(67+26)*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()
+            +" H"+67*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone214 = floor2.append("g").attr("class","f2z14")
+    zone214.append("path").attr("d","M"+75*xzoom.toString()+","+(zone29y+34*yzoom).toString()+" H"+(75+44)*xzoom.toString()+" V"+(zone29y+58*yzoom).toString()
+            +" H"+75*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone215 = floor2.append("g").attr("class","f2z15")
+    zone215.append("path").attr("d","M"+(189-35)*xzoom+","+(zone29y+14*yzoom).toString()+" H"+(189-21)*xzoom+" V"+(zone29y+34*yzoom).toString()
+            +" H"+(189-35)*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone216 = floor2.append("g").attr("class","f2z16")
+    zone216.append("path").attr("d","M"+123*xzoom.toString()+","+(111-40)*yzoom.toString()+" H"+(123+45)*xzoom.toString()+" V"+(71+20)*yzoom.toString()
+            +" H"+123*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    var floor3 = d3.select("#floorPlan3").append("svg").attr("width",w).attr("height",h).attr("class","floorthree")
+    floor.push(floor3)
+
+    zone31 = floor3.append("g").attr("class","f3z1")
+    zone31y = 16*yzoom
+    zone31.append("path").attr("d","M0,0 H"+30*xzoom.toString()+" V"+16*yzoom.toString()+" H0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+
+    zone32 = floor3.append("g").attr("class","f3z2")
+    zone32.append("path").attr("d","M"+30*xzoom.toString()+",0 H"+(30+103)*xzoom.toString()+" V"+16*yzoom.toString()+" H"+30*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+
+    zone33 = floor3.append("g").attr("class","f3z3")
+    zone33.append("path").attr("d","M"+73*xzoom.toString()+","+(zone29y-11*yzoom).toString()+" H"+(72+52)*xzoom.toString()+" V"+(zone29y+9*yzoom).toString()
+            +" H"+73*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone34 = floor3.append("g").attr("class","f3z4")
+    zone34.append("path").attr("d","M"+67*xzoom.toString()+","+(zone29y+14*yzoom).toString()+" H"+(67+26)*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()
+            +" H"+67*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone35 = floor3.append("g").attr("class","f3z5")
+    zone35.append("path").attr("d","M"+75*xzoom.toString()+","+(zone29y+34*yzoom).toString()+" H"+118*xzoom.toString()+" V"+(zone29y+58*yzoom).toString()
+            +" H"+75*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone36 = floor3.append("g").attr("class","f3z6")
+    zone36.append("path").attr("d","M"+16*xzoom.toString()+","+(111-16)*yzoom.toString()+" H"+(16+122)*xzoom.toString()+" V"+111*yzoom.toString()
+            +" H"+16*xzoom.toString())
+           .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone37 = floor3.append("g").attr("class","f3z7")
+    zone37.append("path").attr("d","M0,"+(111-24)*yzoom.toString()+" H"+16*xzoom.toString()+" V"+111*yzoom.toString()+" H0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone38 = floor3.append("g").attr("class","f3z8")
+    zone38.append("path").attr("d","M0,"+16*yzoom.toString()+" H"+16*xzoom.toString()+" V"+(111-24)*yzoom.toString()+" H0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone39 = floor3.append("g").attr("class","f3z9")
+    zone39.append("path").attr("d","M"+21*xzoom.toString()+","+(zone29y+34*yzoom).toString()+" H"+45*xzoom.toString()+" V"+(zone29y+58*yzoom).toString()
+            +" H"+21*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone310 = floor3.append("g").attr("class","f3z10")
+    zone310.append("path").attr("d","M"+zone29x.toString()+","+(zone29y-11*yzoom).toString()+" H"+(zone29x+16*xzoom).toString()+" V"+(zone29y+34*yzoom).toString()
+            +" H"+21*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone311a = floor3.append("g").attr("class","f3z11A")
+    zone311a.append("path").attr("d","M"+16*xzoom.toString()+","+16*yzoom.toString()+" H"+73*xzoom.toString()+" V"+(zone29y+12*yzoom).toString()
+            +" H"+(zone29x+16*xzoom).toString()+" V"+(zone29y-11*yzoom).toString()+" H"+zone29x.toString()+" V"+(zone29y+12*yzoom).toString()
+            +" H"+16*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+    zone311a.append("path").attr("d","M"+73*xzoom.toString()+","+16*xzoom.toString()+" H"+133*xzoom.toString()+" V"+(zone29y+12*yzoom).toString()
+            +" H"+73*xzoom.toString()+" V"+(zone29y+9*yzoom).toString()+" H"+124*xzoom.toString()+" V"+21*yzoom.toString()+" H"+73*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone311b = floor3.append("g").attr("class","f3z11B")
+    zone311b.append("path").attr("d","M"+16*xzoom.toString()+","+(zone29y+12*yzoom).toString()+" H"+21*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()
+            +" H"+16*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+    zone311b.append("path").attr("d","M"+37*xzoom.toString()+','+(zone29y+12*yzoom).toString()+" H"+133*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()
+            +" H"+118*xzoom.toString()+" V"+(zone29y+14*yzoom).toString()+" H"+67*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()+" H"+53*xzoom.toString()
+            +" V"+(zone29y+14*yzoom).toString()+" H"+37*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone311c = floor3.append("g").attr("class","f3z11C")
+    zone311c.append("path").attr("d","M"+16*xzoom.toString()+","+(111-16)*yzoom.toString()+" V"+(zone29y+34*yzoom).toString()+" H"+21*xzoom.toString()
+            +" V"+(111-20)*yzoom.toString()+" H"+45*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()+" H"+75*xzoom.toString()+" V"+(111-20)*yzoom.toString()
+            +" H"+118*xzoom.toString()+" V"+(zone29y+34*yzoom).toString()+" H"+133*xzoom.toString()+" V"+95*yzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    zone312 = floor3.append("g").attr("class","f3z12")
+    zone312.append("path").attr("d","M"+133*xzoom.toString()+",0 H"+189*xzoom.toString()+" V"+111*yzoom.toString()+" H"+138*xzoom.toString()+" V"+(111-16)*yzoom.toString()
+            +" H"+133*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","#99FFFF").attr("opacity","0.1").on("click", function(){getZoneParas(this.parentNode.className["baseVal"])});
+
+    floor1.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",112).attr("fill","yellow").attr("opacity",1)
+    floor1.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",249).attr("fill","yellow").attr("opacity",1)
+    floor1.append("rect").attr("width",6).attr("height",6).attr("x",41).attr("y",258).attr("fill","yellow").attr("opacity",1)
+    floor1.append("rect").attr("width",6).attr("height",6).attr("x",75).attr("y",258).attr("fill","yellow").attr("opacity",1)
+    floor1.append("rect").attr("width",6).attr("height",6).attr("x",398).attr("y",260).attr("fill","yellow").attr("opacity",1)
+    floor1.append("rect").attr("width",6).attr("height",6).attr("x",450).attr("y",260).attr("fill","yellow").attr("opacity",1)
+
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",55).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",87).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",139).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",166).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",192).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",218).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",247).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",270).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",296).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",322).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",350).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",378).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",430).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",460).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",460).attr("y",55).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",460).attr("y",83).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",460).attr("y",111).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",460).attr("y",139).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",460).attr("y",167).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",460).attr("y",191).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",460).attr("y",219).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",450).attr("y",260).attr("fill","yellow").attr("opacity",1)
+
+     floor2.append("rect").attr("width",6).attr("height",6).attr("x",418).attr("y",260).attr("fill","yellow").attr("opacity",1)
+     floor2.append("rect").attr("width",6).attr("height",6).attr("x",365).attr("y",260).attr("fill","yellow").attr("opacity",1)
+     floor2.append("rect").attr("width",6).attr("height",6).attr("x",339).attr("y",260).attr("fill","yellow").attr("opacity",1)
+     floor2.append("rect").attr("width",6).attr("height",6).attr("x",311).attr("y",260).attr("fill","yellow").attr("opacity",1)
+     floor2.append("rect").attr("width",6).attr("height",6).attr("x",285).attr("y",260).attr("fill","yellow").attr("opacity",1)
+     floor2.append("rect").attr("width",6).attr("height",6).attr("x",233).attr("y",260).attr("fill","yellow").attr("opacity",1)
+     floor2.append("rect").attr("width",6).attr("height",6).attr("x",210).attr("y",260).attr("fill","yellow").attr("opacity",1)
+     floor2.append("rect").attr("width",6).attr("height",6).attr("x",102).attr("y",260).attr("fill","yellow").attr("opacity",1)
+     floor2.append("rect").attr("width",6).attr("height",6).attr("x",76).attr("y",260).attr("fill","yellow").attr("opacity",1)
+     floor2.append("rect").attr("width",6).attr("height",6).attr("x",45).attr("y",260).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",248).attr("fill","yellow").attr("opacity",1)
+
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",216).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",189).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",160).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",136).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",108).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",83).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",44).attr("fill","yellow").attr("opacity",1)
+
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",57).attr("y",60).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",57).attr("y",88).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",57).attr("y",120).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",57).attr("y",149).attr("fill","yellow").attr("opacity",1)
+
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",112).attr("y",60).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",112).attr("y",88).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",137).attr("y",88).attr("fill","yellow").attr("opacity",1)
+
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",194).attr("y",60).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",212).attr("y",60).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",194).attr("y",86).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",212).attr("y",86).attr("fill","yellow").attr("opacity",1)
+
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",243).attr("y",60).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",260).attr("y",60).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",243).attr("y",86).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",260).attr("y",86).attr("fill","yellow").attr("opacity",1)
+
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",293).attr("y",60).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",312).attr("y",60).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",293).attr("y",86).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",312).attr("y",86).attr("fill","yellow").attr("opacity",1)
+
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",343).attr("y",60).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",362).attr("y",60).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",343).attr("y",86).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",362).attr("y",86).attr("fill","yellow").attr("opacity",1)
+
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",407).attr("y",60).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",395).attr("y",86).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",418).attr("y",86).attr("fill","yellow").attr("opacity",1)
+
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",410).attr("y",128).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",428).attr("y",128).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",410).attr("y",152).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",418).attr("y",204).attr("fill","yellow").attr("opacity",1)
+    floor2.append("rect").attr("width",6).attr("height",6).attr("x",394).attr("y",204).attr("fill","yellow").attr("opacity",1)
+
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",80).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",192).attr("y",62).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",192).attr("y",87).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",47).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",112).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",140).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",205).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",2).attr("y",240).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",57).attr("y",87).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",57).attr("y",122).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",57).attr("y",149).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",42).attr("y",260).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",100).attr("y",182).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",100).attr("y",225).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",109).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",77).attr("y",260).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",134).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",196).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",250).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",275).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",301).attr("y",2).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",207).attr("y",260).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",233).attr("y",260).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",285).attr("y",260).attr("fill","yellow").attr("opacity",1)
+    floor3.append("rect").attr("width",6).attr("height",6).attr("x",312).attr("y",260).attr("fill","yellow").attr("opacity",1)
+
+    pzone11 = floor1.append("g").attr("class","pf1z1")
+    pzone11.append("path").attr("d","M0,"+50*yzoom.toString()+" H0 V"+40*yzoom.toString()+" H"+48*xzoom.toString()+" V0 H"+zone12x.toString()+
+            " V"+36*yzoom.toString()+" H"+(zone12x+75*xzoom).toString()+" V0"+" H"+189*xzoom.toString() +" V"+46*yzoom.toString()+" H"+118*xzoom.toString()+
+            " V"+66*yzoom.toString()+" H"+92*xzoom.toString()+" V"+46*yzoom.toString()+" H"+16*xzoom.toString()+
+            " V"+50*yzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","0px").attr("fill","none").attr("opacity","0.5");
+    pzone11.append("path").attr("d","M0,"+111*yzoom.toString()+" V"+91*yzoom.toString()+" H"+16*xzoom.toString()+" V"+46*yzoom.toString()+" H"+36*xzoom.toString()+
+            " V"+66*yzoom.toString()+" H"+(36+16)*xzoom.toString()+" V"+46*yzoom.toString()+" H"+zone16x.toString()+" V"+66*yzoom.toString()+" H"+(zone16x+8*xzoom).toString()+
+            " V"+zone15y.toString()+" H"+(zone15x+44*xzoom).toString()+" V"+46*yzoom.toString()+" H"+140*xzoom.toString()+" V"+66*yzoom.toString()+" H"+149*xzoom.toString() +
+            " V"+46*yzoom.toString()+" H"+189*xzoom.toString()+" V"+95*yzoom.toString()+" H"+149*xzoom.toString()+" V"+111*yzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","0px").attr("fill","none").attr("opacity","0.5");
+    pzone11.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",94*xzoom.toString()).attr("y",100*yzoom.toString()).text("0")
+
+    pzone12 = floor1.append("g").attr("class","pf1z2")
+    pzone12.append("path").attr("d","M0,0 H"+zone11x.toString()+" V"+zone11y.toString()+" H0"+" V0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone12.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",20*xzoom.toString()).attr("y",28*yzoom.toString()).text("0")
+
+    pzone13 = floor1.append("g").attr("class","pf1z3")
+    pzone13.append("path").attr("d","M0,"+50*yzoom.toString()+" H"+16*xzoom.toString()+" V"+91*yzoom.toString()+" H0"+" V"+50*yzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone13.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",8*xzoom.toString()).attr("y",83*yzoom.toString()).text("0")
+
+    pzone14 = floor1.append("g").attr("class","pf1z4")
+    pzone14.append("path").attr("d","M"+zone16x.toString()+","+zone16y.toString()+" H"+(zone16x+26*xzoom).toString()
+            +" V"+(zone16y-20*yzoom).toString()+" H"+zone16x.toString()+" V"+zone16y.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone14.append("path").attr("d","M"+36*xzoom.toString()+","+46*yzoom.toString()+" H"+(36+16)*xzoom.toString()+" V"+(46+20)*yzoom.toString()+" H"+36*xzoom.toString()+" V"+46*yzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone14.append("path").attr("d","M"+(189-49)*xzoom.toString()+","+46*yzoom.toString()+" H"+(189-40)*xzoom.toString()+" V"+(46+20)*yzoom.toString()+" H"+140*xzoom.toString()+" V"+46*yzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone14.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",80*xzoom.toString()).attr("y",62*yzoom.toString()).text("0")
+
+    pzone15 = floor1.append("g").attr("class",'pf1z5')
+    pzone15.append("path").attr("d","M"+zone12x.toString()+",0 H"+(zone12x+75*xzoom).toString()+" V"+zone12y.toString()+" H"+zone12x.toString()+" V0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px")
+            .attr("fill","none").attr("opacity","0.5");
+    pzone15.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",94*xzoom.toString()).attr("y",28*yzoom.toString()).text("0")
+
+    pzone16 = floor1.append("g").attr("class","pf1z6");
+    pzone16.append("path").attr("d","M"+zone15x.toString()+","+zone15y.toString()+" H"+(zone15x+44*xzoom).toString()
+            +" V"+(zone15y-24*yzoom).toString()+" H"+zone15x.toString()+" V"+zone15y.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone16.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",94*xzoom.toString()).attr("y",86*yzoom.toString()).text("0")
+
+    pzone17 = floor1.append("g").attr("class","pf1z7");
+    pzone17.append("path").attr("d","M"+zone14x.toString()+","+zone13y.toString()+" H"+(zone14x+20*xzoom).toString()
+            +" V"+111*yzoom.toString()+" H"+zone14x.toString()+" V"+zone13y.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px")
+            .attr("fill","none").attr("opacity","0.5");
+    pzone17.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",158*xzoom.toString()).attr("y",108*yzoom.toString()).text("0")
+
+    pzone18 = floor1.append("g").attr("class","pf1z8");
+    pzone18.append("path").attr("d","M"+(zone14x+20*xzoom).toString()+","+zone13y.toString()+" H"+(zone14x+40*xzoom).toString()
+            +" V"+111*yzoom.toString()+" H"+(zone14x+20*xzoom).toString()+" V"+zone13y.toString()).attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px")
+            .attr("fill","none").attr("opacity","0.5");
+    pzone18.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",178*xzoom.toString()).attr("y",108*yzoom.toString()).text("0")
+
+    pzone21 = floor2.append("g").attr("class","pf2z1")
+    pzone21.append("path").attr("d","M"+32*xzoom.toString()+",0 H"+92*xzoom.toString()+" V"+22*yzoom.toString()+" H"+98*xzoom.toString()+" V"+41*yzoom.toString()+
+            " H"+93*xzoom.toString()+" V"+46*yzoom.toString()+" H"+67*xzoom.toString()+" V"+66*yzoom.toString()+" H"+75*xzoom.toString()+" V"+90*yzoom.toString()+
+            " H"+78*xzoom.toString()+" V"+111*yzoom.toString()+" H"+48*xzoom.toString()+" V"+95*yzoom.toString()+" H"+45*xzoom.toString()+" V"+82*yzoom.toString()+
+            " H"+37*xzoom.toString()+" V"+66*yzoom.toString()+" H"+53*xzoom.toString()+" V"+46*yzoom.toString()+" H"+37*xzoom.toString()+" V"+16*yzoom.toString()+
+            " H"+32*xzoom.toString()+" V0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone21.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",58*xzoom.toString()).attr("y",88*yzoom.toString()).text("1")
+
+    pzone22 = floor2.append("g").attr("class","pf2z2")
+    pzone22.append("path").attr("d","M0,0 H"+32*xzoom.toString()+" V"+16*yzoom.toString()+" H"+37*xzoom.toString()+" V"+68*yzoom.toString()+" H"+21*xzoom.toString()+
+            " V"+90*yzoom.toString()+" H"+37*xzoom.toString()+" V"+82*yzoom.toString()+" H"+45*xzoom.toString()+" V"+95*yzoom.toString()+" H"+48*xzoom.toString()+
+            " V"+111*yzoom.toString()+" H0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","none").attr("opacity","0.5");
+    pzone22.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",20*xzoom.toString()).attr("y",40*yzoom.toString()).text("0")
+
+    pzone23 = floor2.append("g").attr("class","pf2z3")
+    pzone23.append("path").attr("d","M"+141*xzoom.toString()+",0 H"+163*xzoom.toString()+" V"+17*yzoom.toString()+" H"+141*xzoom.toString()+" V0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone23.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",151*xzoom.toString()).attr("y",10*yzoom.toString()).text("0")
+
+    pzone24 = floor2.append("g").attr("class","pf2z4")
+    pzone24.append("path").attr("d","M"+zone16x.toString()+","+zone16y.toString()+" H"+(zone16x+26*xzoom).toString()
+            +" V"+(zone16y-20*yzoom).toString()+" H"+zone16x.toString()+" V"+zone16y.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone24.append("path").attr("d","M"+36*xzoom.toString()+","+46*yzoom.toString()+" H"+(36+16)*xzoom.toString()+" V"+(46+20)*yzoom.toString()+" H"+36*xzoom.toString()+" V"+46*yzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone24.append("path").attr("d","M"+(189-49)*xzoom.toString()+","+46*yzoom.toString()+" H"+(189-40)*xzoom.toString()+" V"+(46+20)*yzoom.toString()+" H"+140*xzoom.toString()+" V"+46*yzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone24.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",80*xzoom.toString()).attr("y",62*yzoom.toString()).text("0")
+
+    pzone25 = floor2.append("g").attr("class","pf2z5")
+    pzone25.append("path").attr("d","M"+22*xzoom.toString()+","+68*yzoom.toString()+" H"+37*xzoom.toString()+" V"+90*yzoom.toString()+" H"+22*xzoom.toString()+" V"+68*yzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+
+    pzone26 = floor2.append("g").attr("class","pf2z6")
+    pzone26.append("path").attr("d","M"+75*xzoom.toString()+","+(zone29y+34*yzoom).toString()+" H"+173*xzoom.toString()+" V"+(zone29y+29*yzoom).toString()
+            +" H"+189*xzoom.toString()+" V"+111*yzoom.toString()+" H"+78*xzoom.toString()+" V"+(111-20)*yzoom.toString()+" H"+75*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone26.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",94*xzoom.toString()).attr("y",86*yzoom.toString()).text("0")
+
+    pzone27 = floor2.append("g").attr("class","pf2z7")
+    pzone27.append("path").attr("d","M"+92*xzoom.toString()+",0 H"+141*xzoom.toString()+" V"+17*yzoom.toString()+" H"+162*xzoom.toString()+" V0 H"+189*xzoom.toString()
+            +" V"+60*yzoom.toString()+" H"+173*xzoom.toString()+" V"+65*yzoom.toString()+" H"+149*xzoom.toString()+" V"+46*yzoom.toString()+" H"+141*xzoom.toString()
+            +" V"+65*yzoom.toString()+" H"+(zone16x+27*xzoom).toString()+" V"+41*yzoom.toString()+" H"+(zone16x+33*xzoom).toString()+" V"+22*yzoom.toString()
+            +" H"+92*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px").attr("fill","none").attr("opacity","0.5");
+    pzone27.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",108*xzoom.toString()).attr("y",10*yzoom.toString()).text("0")
+
+    pzone31 = floor3.append("g").attr("class","pf3z1")
+    pzone31.append("path").attr("d","M"+40*xzoom.toString()+",0 H"+73*xzoom.toString()+" V"+22*yzoom.toString()+" H"+80*xzoom.toString()+" V"+41*yzoom.toString()+
+            " H"+73*xzoom.toString()+" V"+46*yzoom.toString()+" H"+67*xzoom.toString()+" V"+66*yzoom.toString()+" H"+75*xzoom.toString()+" V"+90*yzoom.toString()+
+            " H"+78*xzoom.toString()+" V"+111*yzoom.toString()+" H"+28*xzoom.toString()+" V"+95*yzoom.toString()+" H"+45*xzoom.toString()+" V"+82*yzoom.toString()+
+            " H"+37*xzoom.toString()+" V"+66*yzoom.toString()+" H"+53*xzoom.toString()+" V"+46*yzoom.toString()+" H"+37*xzoom.toString()+" V"+22*yzoom.toString()+
+            " H"+40*xzoom.toString()+" V0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone31.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",58*xzoom.toString()).attr("y",88*yzoom.toString()).text("0")
+
+    pzone32 = floor3.append("g").attr("class","pf3z2")
+    pzone32.append("path").attr("d","M"+73*xzoom.toString()+",0 V"+22*yzoom.toString()+" H"+80*xzoom.toString()+" V"+41*yzoom.toString()+
+            " H"+73*xzoom.toString()+" V"+46*yzoom.toString()+" H"+67*xzoom.toString()+" V"+66*yzoom.toString()+" H"+75*xzoom.toString()+" V"+91*yzoom.toString()+
+            " H"+78*xzoom.toString()+" V"+111*yzoom.toString()+" H"+138*xzoom.toString()+" V"+(111-16)*yzoom.toString()+" H"+134*xzoom.toString()+" V0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone32.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",94*xzoom.toString()).attr("y",86*yzoom.toString()).text("0")
+
+    pzone33 = floor3.append("g").attr("class","pf3z3")
+    pzone33.append("path").attr("d","M0,"+16*yzoom.toString()+" H"+16*xzoom.toString()+" V"+22*yzoom.toString()+" H"+36*xzoom.toString()+" V"+65*yzoom.toString()+" H"+21*xzoom.toString()+
+            " V"+90*yzoom.toString()+" H"+37*xzoom.toString()+" V"+82*yzoom.toString()+" H"+45*xzoom.toString()+" V"+95*yzoom.toString()+" H"+28*xzoom.toString()+
+            " V"+111*yzoom.toString()+" H0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone33.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",20*xzoom.toString()).attr("y",40*yzoom.toString()).text("0")
+
+    pzone34 = floor3.append("g").attr("class","pf3z4")
+    pzone34.append("path").attr("d","M"+zone16x.toString()+","+zone16y.toString()+" H"+(zone16x+26*xzoom).toString()
+            +" V"+(zone16y-20*yzoom).toString()+" H"+zone16x.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone34.append("path").attr("d","M"+36*xzoom.toString()+","+46*yzoom.toString()+" H"+(36+16)*xzoom.toString()+" V"+(46+20)*yzoom.toString()+" H"+36*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone34.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",80*xzoom.toString()).attr("y",62*yzoom.toString()).text("0")
+
+    pzone35 = floor3.append("g").attr("class","pf3z5")
+    pzone35.append("path").attr("d","M"+138*xzoom.toString()+","+111*yzoom.toString()+" V"+(111-16)*yzoom.toString()+" H"+134*xzoom.toString()+" V0 H"+189*xzoom.toString()
+            +" V"+111*yzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+
+    pzone36 = floor3.append("g").attr("class","pf3z6")
+    pzone36.append("path").attr("d","M0,0 H"+40*xzoom.toString()+" V"+22*yzoom.toString()+" H"+16*xzoom.toString()+" V"+16*yzoom.toString()+" H0")
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone36.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",20*xzoom.toString()).attr("y",10*yzoom.toString()).text("0")
+
+    pzone37 = floor3.append("g").attr("class","pf3z7")
+    pzone37.append("path").attr("d","M"+21*xzoom.toString()+","+(zone29y+34*yzoom).toString()+" H"+37*xzoom.toString()+" V"+(zone29y+58*yzoom).toString()+" H"+21*xzoom.toString())
+            .attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","5px").attr("fill","none").attr("opacity","0.5");
+    pzone37.append("text").attr("fill","white").attr("font-size","24px").attr("text-anchor","middle").attr("stroke-width","1").attr("stroke","black").attr("x",29*xzoom.toString()).attr("y",80*yzoom.toString()).text("0")
+
+    function getZoneParas(zone){
+        console.log(zone)
+        $.getJSON('/getZoneParas',{
+            name:zone,
+            now:new Date()
+        },function(data){
+            var timeString = $("#timeOfAll").val()
+            //console.log(timeString)
+            var curTime = (new Date(timeString)).getTime();
+            $("#zone_paras").highcharts("StockChart", {
+                 chart: {
+                   width:1233,
+                   height:506,
+            backgroundColor: {
+                linearGradient: [0, 0, 500, 500],
+                stops: [
+                    [0, 'rgb(255, 255, 255)'],
+                    [1, 'rgb(240, 248, 255)']
+                ]
+            },
+            type: 'line'
+        },
+                rangeSelector: {
+                    buttons: [{
+                        type: 'day',
+                        count: 1,
+                        text: '1d'
+                    }, {
+                        type: 'week',
+                        count: 1,
+                        text: '1w'
+                    }, {
+                        type: 'all',
+                        text: 'All'
+                    }],
+                    selected: 2
+                },
+                xAxis: {
+                    title: {
+                        text: 'time'
+                    },
+                    type: 'datetime',
+                    labels: {
+                        formatter: function () {
+                            var vDate = new Date(this.value-8*3600000);
+                            return (vDate.getMonth() + 1) + "." + vDate.getDate() + " " + vDate.getHours()+ ":" + vDate.getMinutes();
+                        },
+                        align: 'center'
+                    }
+                },
+                yAxis: {
+                    opposite: false
+                },
+                plotOptions: {
+                    series: {
+
+                        events: {
+                            click: function (d) {
+                                selecttime = d.point.x-8*3600000
+                                drawSelectPara(selectpara,minpara,maxpara,lcpara,hcpara)
+                                console.log(selecttime)
+                            }
+                        }
+                    }
+                },
+                series: [
+
+                        {name: 'reheat power',id:'data1', type: "spline", data: data[0]},
+                        {name: 'CO2', type: "spline", data: data[1]},
+                        {name: 'supply rate', type: "spline", data: data[2]},
+                        {name: 'supply temp', type: "spline", data: data[3]},
+                        {name: 'damper pos', type: "spline", data: data[4]},
+                        {name: 'equip power', type: "spline", data: data[5]},
+                        {name: 'light power', type: "spline", data: data[6]},
+                        {name: 'thermo temp', type: "spline", data: data[7]},
+                        {name: 'cool setp', type: "spline", data: data[8]},
+                        {name: 'heat setp', type: "spline", data: data[9]},
+                        {name: 'drybub temp',type:"spline",data:data[10]},
+                        {name: "time",type: 'flags', data:[{x:curTime+8*3600000,title:"S",text:"selected time"}], onSeries : 'data1', shape : 'circlepin',color: 'purple'}
+
+
+                        //{name: 'speci', type: "spline", data: data},
+                ],
+                legend: {
+                    enabled: true,
+                    layout: 'horizontal',
+                    verticalAlign: 'bottom',
+                    shadow: true
+                },
+                navigator:{
+                },
+                credits: {
+                    enabled: false
+                }
+            })
+        })
+    }
+
+    function augmentedDrawSelectPara(para,min,max,colora,colorb){
+        //augmented for time to adjust the transforment select from prox info
+        selectpara = para
+        $("#selectedPara").val(selectpara)
+        minpara = min
+        maxpara = max
+        lcpara = colora
+        hcpara = colorb
+        clickWithTime(0)
+    }
+
+    function drawSelectPara(para,min,max,colora,colorb){
+        selectpara = para
+        minpara = min
+        maxpara = max
+        lcpara = colora
+        hcpara = colorb
+        //console.log("paraselect"+selecttime)
+        $.getJSON('/getSelectPara', {
+            para:para,
+            time:selecttime,
+            now: new Date().getTime()
+        },function(data){
+            //console.log(data)
+            var compute = d3.interpolate(d3.rgb(colora),d3.rgb(colorb))
+            for(var i in floor)
+            {
+                //redraw
+                floor[i].selectAll("circle").remove()
+                floor[i].selectAll("path").attr("fill","none").attr("opacity",0.1)
+            }
+
+            if(para == 'Lights Power'){
+               for(var i in data[1]){
+                    if(data[1][i]["count"] == 0 ){
+                        d3.select(".pf"+data[1][i]["floor"]+"z"+data[1][i]["zone"]).selectAll("path").attr("fill",compute(0))
+                    }
+               }
+            }
+
+            for(var i in data[0]){
+                //console.log(data[1])
+                for(var j in data[1]){
+                    d3.select(".pf"+data[1][j]["floor"]+"z"+data[1][j]["zone"]).selectAll("text").text(data[1][j]["count"])
+                }
+                if(data[0][i].zone != null){
+                    if(para == 'Lights Power'|| para == 'REHEAT COIL Power'){
+                       d3.select(".f"+data[0][i].floor+"z"+data[0][i].zone).selectAll("path")
+                        .attr("fill",compute(Math.log(data[0][i].value,max))).attr("opacity",0.5)
+                    }
+                    else{
+                        d3.select(".f"+data[0][i].floor+"z"+data[0][i].zone).selectAll("path")
+                        .attr("fill",compute((data[0][i].value-min)/(max-min))).attr("opacity",0.5)
+                    }
+                }
+                else{
+                    view_vav_floor(para,selecttime)
+                    if(data[0][i].floor == 1)d3.select(".floorone").selectAll("path").attr("fill",compute((data[0][i].value-min)/(max-min))).attr("opacity",0.5)
+                    if(data[0][i].floor == 2)d3.select(".floortwo").selectAll("path").attr("fill",compute((data[0][i].value-min)/(max-min))).attr("opacity",0.5)
+                    if(data[0][i].floor == 3)d3.select(".floorthree").selectAll("path").attr("fill",compute((data[0][i].value-min)/(max-min))).attr("opacity",0.5)
+                }
+            }
+
+
+            //setTimeOfAll()
+            //console.log(data)
+
+        })
+    }
+
+    function view_vav_floor(para,selecttime){
+         $.getJSON('/getSelectFloorPara', {
+            para:para,
+            now: new Date().getTime()
+         },function(data){
+             for(var i in data){
+                 draw_vav_floor(para,parseInt(i)+1,data[i],selecttime)
+             }
+         })
+    }
+
+    function draw_vav_floor(para,num,data,selecttime){
+        console.log(data)
+
+        $("#vav_floor"+ num.toString()).highcharts("StockChart", {
+            rangeSelector: {
+                enabled: false
+            },
+             xAxis: {
+                type: 'datetime',
+                labels: {
+                    formatter: function () {
+                        var vDate = new Date(this.value-8*3600000);
+                        return (vDate.getMonth() + 1) + "." + vDate.getDate() + " " + vDate.getHours()+ ":" + vDate.getMinutes();
+                    },
+                    align: 'center'
+                }
+             },
+            yAxis: {
+                opposite: false
+            },
+            scrollbar: {
+                enabled: false
+            },
+            navigator: {
+                enabled: false
+            },
+            series: [
+                {name: para, type: "spline", data: data, id : "dataseries"},
+                {type: 'flags', data:[{x:parseInt(selecttime+8*3600000),title:"S",text:"selected time"}], onSeries : 'dataseries', shape : 'circlepin'}
+            ],
+            credits: {
+                enabled: false
+            }
+        })
+    }
+
+    function setTimeOfAll(){
+
+        $("#timeOfAll").val(function(){
+            //  console.log("value"+selecttime)
+            var tDate = new Date(selecttime)
+            return (tDate.getFullYear() + "-" + (tDate.getMonth() + 1) + "-" + tDate.getDate() + " " + tDate.getHours()+ ":" + tDate.getMinutes()+ ":" + tDate.getSeconds())
+        })
+    }
+
+    function clickWithTime(type){
+        var timeString = $("#timeOfAll").val()
+        //console.log(timeString)
+        var curTime = (new Date(timeString)).getTime();
+        //console.log(curTime)
+        $.getJSON('/getCurTimeOfBldg', {
+            time:curTime,
+            now: new Date().getTime()
+        },function(data){
+            //console.log("data"+data)
+            curTime = data;
+            if(type==-1){
+                selecttime = curTime-300000
+                drawSelectPara(selectpara,minpara,maxpara,lcpara,hcpara)
+                setTimeOfAll()
+            }
+            else if(type==1)
+            {
+                selecttime = curTime+300000
+                //console.log("select"+selecttime)
+                drawSelectPara(selectpara,minpara,maxpara,lcpara,hcpara)
+                setTimeOfAll()
+            }
+            else if(type==0)
+            {
+                selecttime = curTime
+                drawSelectPara(selectpara,minpara,maxpara,lcpara,hcpara)
+            }
+            //console.log(selecttime)
+        })
+    }
+
+    function robot(typeint){
+        var timeString = $("#timeOfAll").val()
+        var curTime = (new Date(timeString)).getTime()
+        $.getJSON('/getRobotTrajectory',{
+            type:typeint,
+            time:curTime,
+            now:new Date().getTime()
+        },function(data){
+            for(var i in floor)
+            {
+                floor[i].selectAll("circle").remove()
+                floor[i].selectAll("path").attr("fill","#99FFFF").attr("opacity","0.1")
+                floor[i].selectAll("image").remove()
+            }
+            for(var j in data[1]){
+                    d3.select(".pf"+data[1][j]["floor"]+"z"+data[1][j]["zone"]).selectAll("text").text(data[1][j]["count"])
+            }
+            floor[Number(data[0]["floor"])-1].append("image").attr("x",Number(data[0]["x"])*xzoom).attr("y",(111-Number(data[0]["y"]))*yzoom)
+                    .attr("width",20).attr("height",20).attr("xlink:href","../static/rose.png")
+            if(typeint != 0){
+                selecttime = data[0].time
+                setTimeOfAll()
+            }
+
+        })
+    }
+
+    function oneTrajectory(typeint){
+        var proxid = $("#tra-proxid").val()
+        var proxid2 = $('#tra-proxid-else').val()
+        var timeString = $("#timeOfAll").val()
+        var curTime = (new Date(timeString)).getTime()
+        //console.log(curTime)
+        $.getJSON('/getTrajectory', {
+            type:typeint,
+            proxid:proxid,
+            proxid2:proxid2,
+            time:curTime,
+            now: new Date().getTime()
+        },function(data){
+            for(var i in floor)
+            {
+                floor[i].selectAll("circle").remove()
+                floor[i].selectAll("path").attr("fill","#99FFFF").attr("opacity","0.1")
+            }
+            console.log(data)
+            for(var j in data[1]){
+                    d3.select(".pf"+data[1][j]["floor"]+"z"+data[1][j]["zone"]).selectAll("text").text(data[1][j]["count"])
+            }
+            if(data[0][0]["x"]!=null){
+                if (data[0][0]["office"] != "black"){
+                    floor[Number(data[0][0]["floor"])-1].append("circle").attr("r",4).attr("cx",Number(data[0][0]["x"])*xzoom).attr("cy",(111-Number(data[0][0]["y"]))*yzoom).attr("fill","red")
+                }
+                else{
+                    floor[Number(data[0][0]["floor"])-1].append("circle").attr("r",4).attr("cx",Number(data[0][0]["x"])*xzoom).attr("cy",(111-Number(data[0][0]["y"]))*yzoom).attr("fill","black").attr("opacity",1)
+                }
+                if(typeint != 0){
+                    selecttime = data[0][0].time
+                    setTimeOfAll()
+                }
+            }
+            else{
+                if(data[0][0]["office"] != "black"){
+                    d3.select(".pf"+data[0][0]["floor"]+"z"+data[0][0]["zone"]).selectAll("path").attr("fill","red")
+                }
+                else{
+                    d3.select(".pf"+data[0][0]["floor"]+"z"+data[0][0]["zone"]).selectAll("path").attr("fill","black").attr("opacity",1)
+                }
+                if(typeint != 0){
+                    selecttime = data[0][0].time
+                    setTimeOfAll()
+                }
+            }
+            if(data[0].length == 2){
+                if(data[0][1]["x"]!=null){
+                    if(data[0][0]["x"] != data[0][1]["x"] || data[0][0]["y"] != data[0][1]["y"]){
+                        floor[Number(data[0][1]["floor"])-1].append("circle").attr("r",4).attr("cx",Number(data[0][1]["x"])*xzoom).attr("cy",(111-Number(data[0][1]["y"]))*yzoom).attr("fill","blue")
+                    }
+                    else{
+                        floor[Number(data[0][1]["floor"])-1].append("circle").attr("r",4).attr("cx",Number(data[0][1]["x"])*xzoom).attr("cy",(111-Number(data[0][1]["y"]))*yzoom).attr("fill","yellow").attr("opacity","1")
+                    }
+                }
+                else{
+                    if(data[0][0]["floor"] != data[0][1]["floor"] || data[0][0]["zone"] != data[0][1]["zone"]) {
+                        d3.select(".pf" + data[0][1]["floor"] + "z" + data[0][1]["zone"]).selectAll("path").attr("fill", "blue")
+                    }
+                    else{
+                        d3.select(".pf" + data[0][1]["floor"] + "z" + data[0][1]["zone"]).selectAll("path").attr("fill", "yellow")
+                    }
+                }
+            }
+            select()
+        })
+    }
+
+
+
+    function select(){
+            var tDate = new Date($("#timeOfAll").val())
+            datestr =  (tDate.getFullYear() + "-" + (tDate.getMonth() + 1) + "-" + tDate.getDate() + " 0:0:0")
+            //console.log(datastr)
+            $.getJSON('/getPersonalRadar',{
+                name:$("#tra-proxid").val(),
+                time:Math.round(new Date(datestr).getTime()/1000),
+                now: new Date().getTime()
+                },
+                function (data) {
+                console.log(data)
+                var myChart = echarts.init(document.getElementById('radar'));
+                var lineStyle = {
+                    normal: {
+                        width: 1,
+                        opacity: 0.5
+                    }
+                }
+
+                option = {
+
+                    title: {
+                        text: 'Personal Time Distribution',
+                        left: 'center',
+                        textStyle: {
+                            color: '#660066'
+                        }
+                    },
+                    legend: {
+                        bottom: 5,
+                        data: ['day distribution','average distribution'],
+                        textStyle: {
+                            color:'#660066',
+                            fontSize: 14
+                        },
+                        selectedMode: 'single'
+                    },
+                    radar: {
+                        indicator:data['indicator'],
+                        shape: 'circle',
+                        name: {
+                            textStyle: {
+                                color: '#660066'
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: [
+                                    'rgba(102, 0, 102, 0.1)', 'rgba(102, 0, 102, 0.2)',
+                                    'rgba(102, 0, 102, 0.4)', 'rgba(102, 0, 102, 0.6)',
+                                    'rgba(102, 0, 102, 0.8)', 'rgba(102, 0, 102, 1)'
+                                ].reverse()
+                            }
+                        },
+                        splitArea: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#003366'
+                            }
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'day distribution',
+                            type: 'radar',
+                            lineStyle: lineStyle,
+                            data: data['data'][0],
+                            symbol: 'none',
+                            itemStyle: {
+                                normal: {
+                                    color: '#F9713C'
+                                }
+                            },
+                            areaStyle: {
+                                normal: {
+                                    opacity: 0.5
+                                }
+                            }
+                        },
+                        {
+                            name: 'average distribution',
+                            type: 'radar',
+                            lineStyle: lineStyle,
+                            data: data['data'][1],
+                            symbol: 'none',
+                            itemStyle: {
+                                normal: {
+                                    color: '#B3E4A1'
+                                }
+                            },
+                            areaStyle: {
+                                normal: {
+                                    opacity: 0.5
+                                }
+                            }
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+            })
+        }
+
+    function showdiv(obj,width){
+
+        $(obj).animate( { width: width}, 500 );
+
+    }
+    function hidediv(obj){
+
+        $(obj).animate( { width: 0}, 500 );
+
+    }
+
+    function showiframe(obj,frame,width){
+        $(frame).animate({width:width},500)
+        showdiv(obj,width)
+    }
+
+    function hideiframe(obj,frame){
+        hidediv(obj);
+        $(frame).animate({width:0},500)
+    }
+
+    $(document).ready(function() {
+        $.getJSON('/getTotalParas', function (data) {
+             myChart = echarts.init(document.getElementById('radar'));
+
+                var lineStyle = {
+                    normal: {
+                        width: 1,
+                        opacity: 0.5
+                    }
+                }
+
+                option = {
+
+                    title: {
+                        text: 'Personal Time Distribution',
+                        left: 'center',
+                        textStyle: {
+                            color: '#660066'
+                        }
+                    },
+                    legend: {
+                        bottom: 5,
+                        data: ['day distribution','average distribution'],
+                        textStyle: {
+                            color:'#660066',
+                            fontSize: 14
+                        },
+                        selectedMode: 'single'
+                    },
+                    radar: {
+                        indicator:data['indicator'],
+                        shape: 'circle',
+                        name: {
+                            textStyle: {
+                                color: '#660066'
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: [
+                                    'rgba(102, 0, 102, 0.1)', 'rgba(102, 0, 102, 0.2)',
+                                    'rgba(102, 0, 102, 0.4)', 'rgba(102, 0, 102, 0.6)',
+                                    'rgba(102, 0, 102, 0.8)', 'rgba(102, 0, 102, 1)'
+                                ].reverse()
+                            }
+                        },
+                        splitArea: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#003366'
+                            }
+                        }
+                    },
+                    radar: {
+                        indicator:[0,1,2,3,4,5],
+                        shape: 'circle',
+                        name: {
+                            textStyle: {
+                                color: '#660066'
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: [
+                                    'rgba(102, 0, 102, 0.1)', 'rgba(102, 0, 102, 0.2)',
+                                    'rgba(102, 0, 102, 0.4)', 'rgba(102, 0, 102, 0.6)',
+                                    'rgba(102, 0, 102, 0.8)', 'rgba(102, 0, 102, 1)'
+                                ].reverse()
+                            }
+                        },
+                        splitArea: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#003366'
+                            }
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'day distribution',
+                            type: 'radar',
+                            lineStyle: lineStyle,
+                            data: [0,0,0,0,0],
+                            symbol: 'none',
+                            itemStyle: {
+                                normal: {
+                                    color: '#F9713C'
+                                }
+                            },
+                            areaStyle: {
+                                normal: {
+                                    opacity: 0.5
+                                }
+                            }
+                        },
+                        {
+                            name: 'average distribution',
+                            type: 'radar',
+                            lineStyle: lineStyle,
+                            data: [0,0,0,0,0],
+                            symbol: 'none',
+                            itemStyle: {
+                                normal: {
+                                    color: '#B3E4A1'
+                                }
+                            },
+                            areaStyle: {
+                                normal: {
+                                    opacity: 0.5
+                                }
+                            }
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+            $("#total_paras_view").highcharts("StockChart", {
+
+                chart: {
+                   width:1000,
+                   height:506,
+            backgroundColor: {
+                linearGradient: [0, 0, 500, 500],
+                stops: [
+                    [0, 'rgb(250, 235, 215)'],
+                    [1, 'rgb(255, 255, 255)']
+                ]
+            },
+            type: 'line'
+        },
+                rangeSelector: {
+                    buttons: [{
+                        type: 'day',
+                        count: 1,
+                        text: '1d'
+                    }, {
+                        type: 'week',
+                        count: 1,
+                        text: '1w'
+                    }, {
+                        type: 'all',
+                        text: 'All'
+                    }],
+                    selected: 2
+                },
+                xAxis: {
+                    title: {
+                        text: 'time'
+                    },
+                    type: 'datetime',
+                    labels: {
+                        formatter: function () {
+                            var vDate = new Date(this.value-8*3600000);
+                            return (vDate.getMonth() + 1) + "." + vDate.getDate() + " " + vDate.getHours()+ ":" + vDate.getMinutes();
+                        },
+                        align: 'center'
+                    }
+                },
+                yAxis: {
+                    opposite: false
+                },
+                plotOptions: {
+                    series: {
+
+                        events: {
+                            click: function (d) {
+                                selecttime = d.point.x-8*3600000
+                                drawSelectPara(selectpara,minpara,maxpara,lcpara,hcpara)
+                                console.log(selecttime)
+                            }
+                        }
+                    }
+                },
+                series: [
+                     {name: 'Deli Fan Power', type: "spline", data: data[0]},
+                     {name: 'Total Fan Power', type: "spline", data: data[1]},
+                        {name: 'HVAC Power', type: "spline", data: data[2]},
+                        {name: 'Drybulb Temp', type: "spline", data: data[3]},
+                        {name: 'Water Temp', type: "spline", data: data[4]}
+
+
+
+                ],
+                legend: {
+                    enabled: true,
+                    layout: 'horizontal',
+                    verticalAlign: 'bottom',
+                    shadow: true
+                },
+                navigator:{
+                },
+                credits: {
+                    enabled: false
+                }
+            })
+            $("#zone_paras").highcharts("StockChart", {
+               chart: {
+                   width:1233,
+                   height:506,
+            backgroundColor: {
+                linearGradient: [0, 0, 500, 500],
+                stops: [
+                    [0, 'rgb(255, 255, 255)'],
+                    [1, 'rgb(240, 248, 255)']
+                ]
+            },
+            type: 'line'
+        },
+                rangeSelector: {
+                    buttons: [{
+                        type: 'day',
+                        count: 1,
+                        text: '1d'
+                    }, {
+                        type: 'week',
+                        count: 1,
+                        text: '1w'
+                    }, {
+                        type: 'all',
+                        text: 'All'
+                    }],
+                    selected: 2
+                },
+                xAxis: {
+                    title: {
+                        text: 'time'
+                    },
+                    type: 'datetime',
+                    labels: {
+                        formatter: function () {
+                            var vDate = new Date(this.value-8*3600000);
+                            return (vDate.getMonth() + 1) + "." + vDate.getDate() + " " + vDate.getHours()+ ":" + vDate.getMinutes();
+                        },
+                        align: 'center'
+                    }
+                },
+                yAxis: {
+                    opposite: false
+                },
+                plotOptions: {
+                    series: {
+
+                        events: {
+                            click: function (d) {
+                                selecttime = d.point.x-8*3600000
+                                drawSelectPara(selectpara,minpara,maxpara,lcpara,hcpara)
+                                console.log(selecttime)
+                            }
+                        }
+                    }
+                },
+                series: [
+                     {name: 'Deli Fan Power', type: "spline", data: data[0]},
+                     {name: 'Total Fan Power', type: "spline", data: data[1]},
+                        {name: 'HVAC Power', type: "spline", data: data[2]},
+                        {name: 'Drybulb Temp', type: "spline", data: data[3]},
+                        {name: 'Water Temp', type: "spline", data: data[4]}
+
+
+
+                ],
+                legend: {
+                    enabled: true,
+                    layout: 'horizontal',
+                    verticalAlign: 'bottom',
+                    shadow: true
+                },
+                navigator:{
+                },
+                credits: {
+                    enabled: false
+                }
+            })
+        })
+    })
+</script>
+</html>

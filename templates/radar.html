@@ -1,0 +1,117 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+    name<input type="text" id="proxidtoselect" style="width: 140px;">
+    &nbsp;time<input type="text" id="timetoselectp" style="width: 140px;">
+    <button class="btn-default btn-success" onclick="select()"><span class="glyphicon glyphicon-facetime-video"></span></button>
+    <div id="main" style="height:500px"></div>
+    <script type="text/javascript" src="../static/jquery-1.12.3.min.js"></script>
+    <script src="../static/echarts.min.js"></script>
+    <script type="text/javascript">
+        function select(){
+
+            $.getJSON('/getPersonalRadar',{
+                name:$("#proxidtoselect").val(),
+                time:Math.round(new Date($("#timetoselectp").val()).getTime()/1000),
+                now: new Date().getTime()
+                },
+                function (data) {
+                console.log(data)
+                var myChart = echarts.init(document.getElementById('main'));
+                var lineStyle = {
+                    normal: {
+                        width: 1,
+                        opacity: 0.5
+                    }
+                }
+
+                option = {
+
+                    title: {
+                        text: 'Personal Time Distribution',
+                        left: 'center',
+                        textStyle: {
+                            color: 'rgb(238, 197, 102)'
+                        }
+                    },
+                    legend: {
+                        bottom: 5,
+                        data: ['day distribution','average distribution'],
+                        textStyle: {
+                            color:'rgb(238, 197, 102)',
+                            fontSize: 14
+                        },
+                        selectedMode: 'single'
+                    },
+                    radar: {
+                        indicator:data['indicator'],
+                        shape: 'circle',
+                        name: {
+                            textStyle: {
+                                color: 'rgb(238, 197, 102)'
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: [
+                                    'rgba(238, 197, 102, 0.1)', 'rgba(238, 197, 102, 0.2)',
+                                    'rgba(238, 197, 102, 0.4)', 'rgba(238, 197, 102, 0.6)',
+                                    'rgba(238, 197, 102, 0.8)', 'rgba(238, 197, 102, 1)'
+                                ].reverse()
+                            }
+                        },
+                        splitArea: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(238, 197, 102, 0.5)'
+                            }
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'day distribution',
+                            type: 'radar',
+                            lineStyle: lineStyle,
+                            data: data['data'][0],
+                            symbol: 'none',
+                            itemStyle: {
+                                normal: {
+                                    color: '#F9713C'
+                                }
+                            },
+                            areaStyle: {
+                                normal: {
+                                    opacity: 0.1
+                                }
+                            }
+                        },
+                        {
+                            name: 'average distribution',
+                            type: 'radar',
+                            lineStyle: lineStyle,
+                            data: data['data'][1],
+                            symbol: 'none',
+                            itemStyle: {
+                                normal: {
+                                    color: '#B3E4A1'
+                                }
+                            },
+                            areaStyle: {
+                                normal: {
+                                    opacity: 0.1
+                                }
+                            }
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+            })
+        }
+
+
+    </script>
+{% endblock %}
+
+

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel ="stylesheet" href="../static/css/bootstrap.min.css">
+    <script type="text/javascript" src="../static/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="../static/d3.min.js"></script>
+</head>
+<style type="text/css">
+     #floorPlan1 {
+        width:600px;
+        height:450px;
+        background:url(../static/VAST_ProxZones_F1.jpg);
+        background-size:600px 450px;
+    }
+     #floorPlan2 {
+        width:600px;
+        height:450px;
+        background:url(../static/VAST_ProxZones_F2.jpg);
+        background-size:600px 450px;
+    }
+     #floorPlan3 {
+        width:600px;
+        height:450px;
+        background:url(../static/VAST_ProxZones_F3.jpg);
+        background-size:600px 450px;
+    }
+</style>
+<body>
+    <div class="container-fluid">
+        <div class="row" style="margin-left: 50px;margin-right: 50px">
+            <h2 id = "employees' proxid">Employees</h2>
+            <div class="btn-group" role="group">
+                <div class="row">
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('vlagos001')">vlagos001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('sfusil001')">sfusil001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('dscozzese001')">dscozzese001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('fbalas001')">fbalas001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('rmieshaber001')">rmieshaber001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('ldedos001')">ldedos001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('tbattles001')">tbattles001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('eminto001')">eminto001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('yfinney001')">yfinney001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('thagan001')">thagan001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('avico001')">avico001</button>
+
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('btempestad001')">btempestad001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('wreynoso001')">wreynoso001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('acalzas001')">acalzas001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('jholly001')">jholly001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('monda001')">monda001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('vfrente001')">vfrente001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('tcarrara001')">tcarrara001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('malinai001')">malinai001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('hmies001')">hmies001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('korilla001')">korilla001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('iborrasca001')">iborrasca001</button>
+
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('bmullen001')">bmullen001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('lbennett001')">lbennett001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('cshipp001')">cshipp001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('ahafon001')">ahafon001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('cmorluniau001')">cmorluniau001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('chawelon001')">chawelon001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('junger001')">junger001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('nbasham001')">nbasham001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('ckinney001')">ckinney001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('bhawelon001')">bhawelon001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('lbergen001')">lbergen001</button>
+
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('gcazar001')">gcazar001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('cforluniau001')">cforluniau001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('mshultz001')">mshultz001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('hcocinaro001')">hcocinaro001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('slea001')">slea001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('mvollan001')">mvollan001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('jnespola001')">jnespola001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('anardi001')">anardi001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('jcastellanos001')">jcastellanos001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('kherrero001')">kherrero001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('lalcazar001')">lalcazar001</button>
+
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('sflecha001')">sflecha001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('ncalixto001')">ncalixto001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('lgrogan001')">lgrogan001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('vomalla001')">vomalla001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('lazada001')">lazada001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('vhatchett001')">vhatchett001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('bridenour001')">bridenour001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('knielson001')">knielson001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('ssinagra001')">ssinagra001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('cwhelan001')">cwhelan001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('csolos001')">csolos001</button>
+
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('slowery001')">slowery001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('iovan001')">iovan001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('sflorez001')">sflorez001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('apinckney001')">apinckney001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('jsimonides001')">jsimonides001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('mcassano001')">mcassano001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('zcoronado001')">zcoronado001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('rfaralso001')">rfaralso001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('sparrino001')">sparrino001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('fmata001')">fmata001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('bfrente001')">bfrente001</button>
+
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('fadair001')">fadair001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('lorosco001')">lorosco001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('eedward001')">eedward001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('pratigan001')">pratigan001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('pbeebe001')">pbeebe001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('pyoung001')">pyoung001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('emintz001')">emintz001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('ncelio001')">ncelio001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('llagos001')">llagos001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('fresumir001')">fresumir001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('ostrum001')">ostrum001</button>
+
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('jsanjorge001')">jsanjorge001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('wvasco001')">wvasco001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('ibarranco001')">ibarranco001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('mbramar001')">mbramar001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('gflorez002')">gflorez002</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('hblue001')">hblue001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('eklinger001')">eklinger001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('bovan001')">bovan001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('epavone001')">epavone001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('clais001')">clais001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('tseifert001')">tseifert001</button>
+
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('aribera001')">aribera001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('acampo001')">acampo001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('rpantanal001')">rpantanal001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('eorilla001')">eorilla001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('anubarron001')">anubarron001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('lcarrara001')">lcarrara001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('cstaley001')">cstaley001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('gflorez003')">gflorez003</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('gflorez004')">gflorez004</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('pyoung002')">pyoung002</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('gflorez005')">gflorez005</button>
+
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('rparade001')">rparade001</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('lalcazar002')">lalcazar002</button>
+                    <button type="button" class="btn btn-default"
+                            onclick = "drawFloorPoints('junger002')">junger002</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-4">
+                <h2 id = "floor1">Floor 1 Plan</h2>
+                <div id = "floorPlan1"></div>
+                </div>
+            <!--<div class="col-lg-4">
+                <h2 id = "floor2">Floor 2 Plan</h2>
+                <div id = "floorPlan2"></div>
+            </div>
+            <div class="col-lg-4">
+                <h2 id = "floor3">Floor 3 Plan</h2>
+                <div id = "floorPlan3"></div>
+            </div>-->
+            </div>
+
+        </div>
+        <p style="margin-top: 10px"><button type="button" class="btn btn-primary" onclick="drawRobot()">robot route</button></p>
+
+
+    </div>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+</body>
+<script type="text/javascript">
+    w = 600
+    h = 450
+    xzoom = w/189.0
+    yzoom = h/111.0
+    var floor = []
+    var floor1 = d3.select("#floorPlan1").append("svg").attr("width",w).attr("height",h).attr("class","floorone")
+    //var floor2 = d3.select("#floorPlan2").append("svg").attr("width",w).attr("height",h)
+    //var floor3 = d3.select("#floorPlan3").append("svg").attr("width",w).attr("height",h)
+    floor.push(floor1)
+    //floor.push(floor2)
+    //floor.push(floor3)
+
+    //floor2.append("circle").attr("cx",52*xzoom).attr("cy",h-60*yzoom).attr("r",4).style("fill","red").style("opacity","1")
+
+
+    zone11 = floor1.append("g")
+    zone11x = 48*xzoom
+    zone11y = 40*yzoom
+    zone11.append("path").attr("d","M0,0 H"+zone11x.toString()+" V"+zone11y.toString()+" H0").attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px")
+            .attr("fill","yellow").attr("opacity","0.5");
+    //zone11.append("text").attr("fill","black").attr("font-size","30px").attr("x",20).attr("y",20).attr("dy","1.2em").text("zone1")
+
+    zone12 = floor1.append("g")
+    zone12x = 60*xzoom
+    zone12y = 36*yzoom
+    zone12.append("path").attr("d","M"+zone12x.toString()+",0 H"+(zone12x+75*xzoom).toString()+" V"+zone12y.toString()+" H"+zone12x.toString()).attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px")
+            .attr("fill","yellow").attr("opacity","0.5");
+    //zone12.append("text").attr("fill","black").attr("font-size","30px").attr("x",200).attr("y",20).attr("dy","1.2em").text("zone2")
+
+    zone13 = floor1.append("g")
+    zone13x = (189-40)*xzoom
+    zone13y = 95*yzoom
+    zone12.append("path").attr("d","M"+zone13x.toString()+",0 H"+(zone13x+40*xzoom).toString()+" V"+zone13y.toString()+" H"+zone13x.toString()).attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px")
+            .attr("fill","yellow").attr("opacity","0.5");
+
+    zone14 = floor1.append("g")
+    zone14x = (189-40)*xzoom
+    zone14y = 16*yzoom
+    zone14.append("path").attr("d","M"+zone14x.toString()+","+zone13y.toString()+" H"+(zone14x+40*xzoom).toString()+" V"+111*yzoom.toString()+" H"+zone14x.toString()).attr("stroke",d3.rgb(134,79,157)).attr("stroke-width","1px")
+            .attr("fill","yellow").attr("opacity","0.5");
+
+    zonecolor = [{color:1},{color:2},{color:3},{color:4}]
+    floor1plan =  d3.select(".floorone").selectAll("g")
+    floor1update = floor1plan.data(zonecolor)
+
+    floor1update.selectAll("path").data(zonecolor).attr("fill",function(d){
+        console.log(d)
+        return "blue";
+    })
+
+    floor1update.attr("fill",function(d,i){
+        console.log(d.color)
+        return "blue"
+    })
+    console.log(floor1update)
+
+
+
+
+</script>
+<script type="text/javascript">
+    function drawFloorPoints(proxid){
+        console.log(proxid)
+        console.log(proxid)
+        $.getJSON('/getFloorPoints',{
+            name: proxid,
+            now: new Date().getTime()
+        },function(data){
+            console.log(data)
+            floor1data = data[0]
+            floor2data = data[1]
+            floor3data = data[2]
+
+            for(var nodeid in floor1data){
+                floor1.append("circle").attr("cx",floor1data[nodeid][0][0]*xzoom)
+                        .attr("cy",h-(floor1data[nodeid][0][1])*yzoom).attr("r","4")
+                        .style("fill","red").style("opacity","1")
+                //console.log(data[nodeid][0][0],data[nodeid][0][1])
+            }
+            for(var nodeid in floor2data){
+                floor2.append("circle").attr("cx",floor2data[nodeid][0][0]*xzoom)
+                        .attr("cy",h-(floor2data[nodeid][0][1])*yzoom).attr("r","4")
+                        .style("fill","red").style("opacity","1")
+            }
+            for(var nodeid in floor3data){
+                floor3.append("circle").attr("cx",floor3data[nodeid][0][0]*xzoom)
+                        .attr("cy",h-(floor3data[nodeid][0][1])*yzoom).attr("r","4")
+                        .style("fill","red").style("opacity","1")
+            }
+        })
+    }
+
+    function drawRobot(){
+        $.getJSON('/getRobotRoute',function(data){
+            //console.log(data)
+            for(var i in data){
+                floor[data[i][0]-1].append("circle").attr("cx",data[i][1]*xzoom)
+                        .attr("cy",h-(data[i][2]*yzoom)).attr("r","4").style("fill","red").style("opacity","1")
+            }
+        })
+    }
+</script>
+</html>

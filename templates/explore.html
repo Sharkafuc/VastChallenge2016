@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Index</title>
+	<link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <script type="text/javascript" src="../static/javascript/jquery-2.0.3.js"></script>
+    <script type="text/javascript" src="../static/javascript/jquery-ui.js"></script>
+    <script type="text/javascript" src="../static/javascript/echarts.js"></script>
+    <script type="text/javascript" src="../static/javascript/index.js"></script>
+</head>
+
+<body>
+    <div id = "index_page" style="height:452px; background-color:none ">
+				<div id="main" style="height:400px; width: 1220px; border:1px solid #ccc;padding:10px;"></div>
+				
+				Floor:<select id = "floorId">
+					<option value="1"  selected = "" >1</option>
+					<option value="2"  selected = "" >2</option>
+					<option value="3"  selected = "" >3</option>
+				</select>
+		  
+		        Zone:<select id = "zoneId">
+					
+				</select>
+	            <span style="position: absolute; font-size: 1px; left:1250px; top:1px;z-index: 99">Light_Power</span>
+				<div class="draggable" style = "position:absolute; left:1220px;top:1px;">
+					<img src="../static/image/1.png"  style = "height:30px;width:30px;" title="Lights_Power" value="Lights_Power" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1280px; top:15px; z-index: 99">Thermo_Temp</span>
+				<div class="draggable" style = "position:absolute; left:1250px;top:15px;">
+					<img src="../static/image/2.png"  style = "height:30px;width:30px;" title="Thermostat_Temp" value="Thermostat_Temp" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1306px; top:29px; z-index: 99">Equip_Power</span>
+				<div class="draggable" style = "position:absolute; left:1280px;top:20px;">
+					<img src="../static/image/3.png"  style = "height:30px;width:30px;" title="Equipment_Power" value="Equipment_Power" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1226px; top:46px; z-index: 99">F_Cool_Power</span>
+                <div class="draggable" style = "position:absolute; left:1300px;top:36px;">
+					<img src="../static/image/4.png"  style = "height:30px;width:30px;" title="Floor_COOLING_Power" value="Floor_COOLING_Power" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1225px; top:60px; z-index: 99">F_SUPPLY_Power</span>
+                <div class="draggable" style = "position:absolute; left:1320px;top:51px;">
+					<img src="../static/image/5.png"  style = "height:30px;width:30px;" title="Floor_SUPPLY_Power" value="Floor_SUPPLY_Power" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1235px; top:75px; z-index: 99">Z_SUPPLY_Temp</span>
+                <div class="draggable" style = "position:absolute; left:1340px;top:65px;">
+					<img src="../static/image/6.png"  style = "height:30px;width:30px;" title="Zone_SUPPLY_Temp" value="Zone_SUPPLY_Temp" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1250px; top:90px;z-index: 99">Damper_Position</span>
+                <div class="draggable" style = "position:absolute; left:1350px;top:85px;">
+					<img src="../static/image/12.png"  style = "height:30px;width:30px;" title="Damper_Position" value="Damper_Position" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1250px; top:110px;z-index: 99">Z_SUPPLY_Rate</span>
+                <div class="draggable" style = "position:absolute; left:1340px;top:105px;">
+					<img src="../static/image/13.png"  style = "height:30px;width:30px;" title="Zone_SUPPLY_Rate" value="Zone_SUPPLY_Rate" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1265px; top:130px;z-index: 99">Z_Cool_Set</span>
+                <div class="draggable" style = "position:absolute; left:1330px;top:130px;">
+					<img src="../static/image/11.png"  style = "height:30px;width:30px;" title="Zone_Cooling_Setpoint" value="Zone_Cooling_Setpoint" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1244px; top:150px;z-index: 99">Floor_Fraction</span>
+                <div class="draggable" style = "position:absolute; left:1315px;top:150px;">
+					<img src="../static/image/10.png"  style = "height:30px;width:30px;" title="Floor_Fraction" value="Floor_Fraction" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1220px; top:168px;z-index: 99">F_LOOP_Temp</span>
+                <div class="draggable" style = "position:absolute; left:1295px;top:170px;">
+					<img src="../static/image/20.png"  style = "height:30px;width:30px;" title="Floor_LOOP_Temp" value="Floor_LOOP_Temp" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1220px; top:190px;z-index: 99">F_Out_Rate</span>
+				<div class="draggable" style = "position:absolute; left:1280px;top:190px;">
+					<img src="../static/image/7.png"  style = "height:30px;width:30px;" title="Floor_Outdoor_Rate" value="Floor_Outdoor_Rate" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1290px; top:215px;z-index: 99">Zone_CO2</span>
+				<div class="draggable" style = "position:absolute; left:1260px;top:205px;">
+					<img src="../static/image/8.png"  style = "height:30px;width:30px;" title="Zone_CO2" value="Zone_CO2" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1280px; top:230px;z-index: 99">F_SUPPLY_temp</span>
+                <div class="draggable" style = "position:absolute; left:1250px;top:220px;">
+					<img src="../static/image/9.png"  style = "height:30px;width:30px;" title="Floor_SUPPLY_temp" value="Floor_SUPPLY_temp" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1265px; top:245px;z-index: 99">F_LOOP_Rate</span>
+                <div class="draggable" style = "position:absolute; left:1235px;top:240px;">
+					<img src="../static/image/15.png"  style = "height:30px;width:30px;" title="Floor_LOOP_Rate" value="Floor_LOOP_Rate" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1260px; top:270px;z-index: 99">F_SUPPLY_Rate</span>
+                <div class="draggable" style = "position:absolute; left:1228px;top:260px;">
+					<img src="../static/image/16.png"  style = "height:30px;width:30px;" title="Floor_SUPPLY_Rate" value="Floor_SUPPLY_Rate" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1260px; top:287px;z-index: 99">Venti_Rate</span>
+                <div class="draggable" style = "position:absolute; left:1223px;top:280px;">
+					<img src="../static/image/17.png"  style = "height:30px;width:30px;" title="Ventilation_Rate" value="Ventilation_Rate" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1255px; top:310px;z-index: 99">Heat_Power</span>
+                <div class="draggable" style = "position:absolute; left:1220px;top:305px;">
+					<img src="../static/image/18.png"  style = "height:30px;width:30px;" title="Heater_Power" value="Heater_Power" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1260px; top:335px;z-index: 99">Total_Power</span>
+                <div class="draggable" style = "position:absolute; left:1228px;top:330px;">
+					<img src="../static/image/19.png"  style = "height:30px;width:30px;" title="Building_Total_Power" value="Building_Total_Power" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1270px; top:360px;z-index: 99">Water_Rise_Temp</span>
+                <div class="draggable" style = "position:absolute; left:1240px;top:350px;">
+					<img src="../static/image/14.png"  style = "height:30px;width:30px;" title="Water_Rising_Temp" value="Water_Rising_Temp" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1280px; top:380px;z-index: 99">Power_Except</span>
+                <div class="draggable" style = "position:absolute; left:1250px;top:375px;">
+					<img src="../static/image/15.png"  style = "height:30px;width:30px;" title="Power_Except" value="Power_Except" />
+				</div>
+
+                <span style="position: absolute; font-size: 1px; left:1300px; top:400px;z-index: 99">Rooms_Cool</span>
+                <div class="draggable" style = "position:absolute; left:1260px;top:395px;">
+					<img src="../static/image/17.png"  style = "height:30px;width:30px;" title="Rooms_Cooling_Sum" value="Rooms_Cooling_Sum" />
+				</div>
+
+
+
+				<div class="btn-group" role="group" style="margin-top:10px; margin-left: 40px">
+                    <button type="button" class="btn btn-default" id="add" value="+" flag="0">+</button>
+                    <button type="button" class="btn btn-default" id="minus" value="-" flag="0">-</button>
+                    <button type="button" class="btn btn-default" id="multiple" value="*" flag="0">*</button>
+                    <button type="button" class="btn btn-default" id="division" value="/" flag="0">/</button>
+                </div>
+
+				<!--<button id="add" value = "+" flag = "0" >+</button>
+				<button id="minus" value = "-" flag = "0">-</button>
+				<button id="multiple" value = "*" flag = "0" >*</button>
+				<button id="division" value = "/" flag = "0">/</button>-->
+
+				<div class="btn-group" role="group" style="margin-top:10px; margin-left: 40px">
+                    <button class = "myProportion btn btn-default btn-xs" value="0.005">milli</button>
+				    <button class = "myProportion btn btn-default btn-xs" value="0.01">centi</button>
+				    <button class = "myProportion btn btn-default btn-xs" value="0.1">deci</button>
+                    <button class = "myProportion btn btn-default btn-xs" value="0.25">quart</button>
+                    <button class = "myProportion btn btn-default btn-xs" value="0.5">half</button>
+                    <button class = "myProportion btn btn-default btn-xs" value="2">twice</button>
+				    <button class = "myProportion btn btn-default btn-xs" value="4">4t</button>
+				    <button class = "myProportion btn btn-default btn-xs" value="10">10t</button>
+				    <button class = "myProportion btn btn-default btn-xs" value="100">100t</button>
+                    <button class = "btn btn-default btn-xs" id = "upMove" value="+100">+100</button>
+				    <button class = "btn btn-default btn-xs" id = "downMove" value="-100">-100</button>
+                </div>
+
+			    <div class="btn-group" role="group" style="margin-top:10px; margin-left: 40px">
+                    <button class = "mySmooth btn btn-default" value="3">3avg</button>
+                    <button class = "mySmooth btn btn-default" value="5">5avg</button>
+				    <button class = "mySmooth btn btn-default" value="7">7avg</button>
+				    <button class = "mySmooth btn btn-default" value="9">9avg</button>
+                </div>
+				
+				
+				<!--<button class = "mySmooth" value="5">5均值</button>
+				<button class = "mySmooth" value="7">7均值</button>
+				<button class = "mySmooth" value="9">9均值</button>-->
+				
+				<div class="btn-group" role="group" style="margin-top:10px; margin-left: 40px">
+				    <button type="button" class="btn btn-default" id="differentiate" value="differentiate">differentiate</button>
+                </div>
+		
+    </div>
+  <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+</body>
+</html>

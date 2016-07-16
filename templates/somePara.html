@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>buildingdata</title>
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <script type="text/javascript" src="../static/jquery-1.12.3.min.js"></script>
+    <style type="text/css">
+        #building{
+            height:600px;
+            border:1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div id="building" class="col-md-12"></div>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/highstock.js"></script>
+</body>
+<script>
+    $(document).ready(function() {
+        $.getJSON('/getBuildingdata', function (data) {
+            $("#building").highcharts("StockChart", {
+                rangeSelector: {
+                    buttons: [{
+                        type: 'day',
+                        count: 1,
+                        text: '1d'
+                    }, {
+                        type: 'week',
+                        count: 1,
+                        text: '1w'
+                    }, {
+                        type: 'all',
+                        text: 'All'
+                    }],
+                    selected: 2
+                },
+                xAxis: {
+                    title: {
+                        text: 'time'
+                    },
+                    type: 'datetime',
+                    labels: {
+                        formatter: function () {
+                            var vDate = new Date(this.value-8*3600000);
+                            return (vDate.getMonth() + 1) + "." + vDate.getDate() + " " + vDate.getHours()+ ":" + vDate.getMinutes();
+                        },
+                        align: 'center'
+                    }
+                },
+                yAxis: {
+                    opposite: false
+                },
+                plotOptions: {
+                    series: {
+
+                        events: {
+                            click: function (d) {
+                                selecttime = d.point.x-8*3600000
+                                drawSelectPara(selectpara,minpara,maxpara,lcpara,hcpara)
+                                console.log(selecttime)
+                            }
+                        }
+                    }
+                },
+                series: [
+                        /*{name: 'CO2', type: "spline", data: data[1]},
+                        {name: '送风速率', type: "spline", data: data[2]},
+                        {name: '送风温度', type: "spline", data: data[3]},
+                        {name: '风阀大小', type: "spline", data: data[4]},
+                        {name: '设备功率', type: "spline", data: data[5]},
+                        {name: '灯光功率', type: "spline", data: data[6]},
+                        {name: '室温', type: "spline", data: data[7]},
+                        {name: '室温冷目的', type: "spline", data: data[8]},
+                        {name: '室温热目的', type: "spline", data: data[9]},
+                        {name: '室外温度',type:"spline",data:data[10]}*/
+                        {name: 'f1z8a', type: "spline", data: data[0]},
+                        {name: 'f2z2', type: "spline", data: data[1]},
+                        {name: 'f2z4', type: "spline", data: data[2]},
+                        {name: 'f3z1', type: "spline", data: data[3]},
+                        {name: 'f1z8aCO2', type: "spline", data: data[4]},
+                        {name: 'f2z2CO2', type: "spline", data: data[5]},
+                        {name: 'f2z4CO2', type: "spline", data: data[6]},
+                        {name: 'f3z1CO2', type: "spline", data: data[7]},
+                         {name: 'f1z8acool', type: "spline", data: data[8]},
+                        {name: 'f2z2cool', type: "spline", data: data[9]},
+                        {name: 'f2z4cool', type: "spline", data: data[10]},
+                        {name: 'f3z1cool', type: "spline", data: data[11]},
+                         {name: 'f1z8aheat', type: "spline", data: data[12]},
+                        {name: 'f2z2heat', type: "spline", data: data[13]},
+                        {name: 'f2z4heat', type: "spline", data: data[14]},
+                        {name: 'f3z1heat', type: "spline", data: data[15]}
+
+                ],
+                legend: {
+                    enabled: true,
+                    layout: 'horizontal',
+                    verticalAlign: 'bottom',
+                    shadow: true
+                },
+                navigator:{
+                },
+                credits: {
+                    enabled: false
+                }
+            })
+        })
+    })
+</script>
+</html>
