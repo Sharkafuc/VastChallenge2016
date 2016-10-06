@@ -10,3 +10,5 @@ The dataset contains the tables needed in the program.
 The bldgprocess contains some options of table bldg.
 
 The buildingdata.py and someParas.py would lead some simple views of the properties of bldg.
+
+CSU-Wang-MC2 contains the answer sheet and vedio.
